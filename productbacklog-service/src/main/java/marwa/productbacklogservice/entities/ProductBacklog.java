@@ -24,8 +24,8 @@ public class ProductBacklog {
     private String status;
     private Date creationDate;
     private Date dueDate;
-    @Transient
+    /*@Transient
     private User user;
-    private Long userID;
+    private Long userID;*/
 
 }

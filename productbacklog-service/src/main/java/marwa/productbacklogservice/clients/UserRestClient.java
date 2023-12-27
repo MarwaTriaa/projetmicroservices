@@ -22,9 +22,9 @@ public interface UserRestClient {
     @CircuitBreaker(name = "userService", fallbackMethod = "getAllDefaultUser")
     List<User> allUsers();
 
-    default User getDefaultUser(Long id, Exception exception){
+    default User getDefaultUser(Long userID, Exception exception){
         User user = new User();
-        user.setUserID(id);
+        user.setUserID(userID);
         user.setNom("non disponible");
         user.setPrenom("non disponible");
         user.setMail("non disponible");

@@ -1,6 +1,6 @@
 package marwa.productbacklogservice.web;
 
-import marwa.productbacklogservice.clients.UserRestClient;
+//import marwa.productbacklogservice.clients.UserRestClient;
 import marwa.productbacklogservice.entities.ProductBacklog;
 import marwa.productbacklogservice.repo.PBRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +15,12 @@ import marwa.productbacklogservice.model.User;
 @RequestMapping("/api")
 public class PBRestController {
     private PBRepository pbRepository;
-    private UserRestClient userRestClient;
+//    private UserRestClient userRestClient;
 
-    public PBRestController(PBRepository pbRepository, UserRestClient userRestClient){
-
+    public PBRestController(PBRepository pbRepository){
+//        , UserRestClient userRestClient
         this.pbRepository= pbRepository;
-        this.userRestClient = userRestClient;
+//        this.userRestClient = userRestClient;
     }
     @GetMapping("/productbacklogs")
     public List<ProductBacklog> productBacklogList (){
@@ -29,10 +29,9 @@ public class PBRestController {
     @GetMapping("/productbacklogs/{id}")
     public ProductBacklog productBacklogById(@PathVariable Long id){
 
-        ProductBacklog productBacklog=  pbRepository.findById(id).get(); //on cherche dans la db
-        User user= userRestClient.findUserById(productBacklog.getUserID());
-        productBacklog.setUser(user);
-        return productBacklog;
+        /*User user= userRestClient.findUserById(productBacklog.getUserID());
+        productBacklog.setUser(user);*/
+        return pbRepository.findById(id).get();
     }
 
 }

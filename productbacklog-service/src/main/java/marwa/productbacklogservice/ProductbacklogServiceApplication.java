@@ -19,10 +19,11 @@ public class ProductbacklogServiceApplication {
     }
     @Bean
     CommandLineRunner start(PBRepository pbRepository){
+        //, UserRestClient userRestClient
         return args -> {
             Date currentDate = new Date();
             // Date d'échéance (mettez une date future, par exemple)
-            Date dueDate = new Date(currentDate.getTime() + 86400000); // Ajoutez un jour à la date actuelle
+            Date dueDate = new Date(currentDate.getTime() + 4 * 86400000); // Ajoutez un jour à la date actuelle
 
                 ProductBacklog productbacklog1 = ProductBacklog.builder()
                         .name("ProductBacklog1")
@@ -32,7 +33,6 @@ public class ProductbacklogServiceApplication {
                         .status("en cours")
                         .creationDate(currentDate)
                         .dueDate(dueDate)
-                        .userID(1L)
                         .build();
                 pbRepository.save(productbacklog1);
                 ProductBacklog productbacklog2 = ProductBacklog.builder()
@@ -42,8 +42,8 @@ public class ProductbacklogServiceApplication {
                         .assignedTo("developpeur 2")
                         .status("à faire")
                         .creationDate(new Date())
-                        .dueDate(new Date(currentDate.getTime() + 2 * 86400000)) // Ajoutez deux jours à la date actuelle
-                        .userID(2L)
+                        .dueDate(new Date(currentDate.getTime() + 7 * 86400000)) // Ajoutez deux jours à la date actuelle
+//                        .userID(2L)
                         .build();
                 pbRepository.save(productbacklog2);
 
