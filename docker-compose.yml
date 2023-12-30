@@ -1,0 +1,41 @@
+services:
+    marwa-discovery-service:
+      build: ./discovery-service
+      container_name: marwa-discovery-service
+      ports:
+        - '8761:8761'
+      expose:
+        - '8761'
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+        interval: 10s
+        retries: 4
+    marwa-productbacklog-service:
+      build: ./productbacklog-service
+      container_name: marwa-productbacklog-service
+      ports:
+        - '8081:8081'
+      expose:
+        - '8081'
+      environment:
+        - DISCOVERY_SERVICE_URL=http://marwa-discovery-service:8761/eureka
+      healthcheck:
+        test: [ "CMD", "curl", "-f", "http://localhost:8081/actuator/health" ]
+        interval: 10s
+        retries: 4
+      depends_on:
+         marwa-discovery-service:
+          condition: service_healthy
+    marwa-project-service:
+      build: ./Project-service
+      container_name: marwa-project-service
+      ports:
+        - '8085:8085'
+      expose:
+        - '8085'
+      environment:
+        - DISCOVERY_SERVICE_URL=http://marwa-discovery-service:8761/eureka
+      depends_on:
+        marwa-productbacklog-service:
+          condition: service_healthy
+
