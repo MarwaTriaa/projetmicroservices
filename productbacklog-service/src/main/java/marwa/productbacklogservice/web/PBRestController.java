@@ -3,10 +3,9 @@ package marwa.productbacklogservice.web;
 //import marwa.productbacklogservice.clients.UserRestClient;
 import marwa.productbacklogservice.entities.ProductBacklog;
 import marwa.productbacklogservice.repo.PBRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import marwa.productbacklogservice.service.ProductBacklogService;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import marwa.productbacklogservice.model.User;
 
@@ -32,6 +31,29 @@ public class PBRestController {
         /*User user= userRestClient.findUserById(productBacklog.getUserID());
         productBacklog.setUser(user);*/
         return pbRepository.findById(id).get();
+    }
+    @PostMapping("/productbacklogs")
+    public ProductBacklog addPB(@RequestBody ProductBacklog pb) {
+        return pbRepository.save(pb);
+    }
+    @DeleteMapping("/productbacklogs/{id}")
+    public ProductBacklog removePB(@PathVariable("id") Long id) {
+        ProductBacklog pb = pbRepository.findById(id).orElse(null);
+        if (pb != null) {
+            pbRepository.delete(pb);
+        }
+        return pb;
+    }
+    @PutMapping("/productbacklogs")
+    public ProductBacklog updatePB(@RequestBody ProductBacklog pb) {
+        return pbRepository.findById(pb.getId())
+                .map(existingPB -> {
+                    existingPB.setName(pb.getName());
+                    existingPB.setDescription(pb.getDescription());
+                    // Ajoutez d'autres propriétés à mettre à jour selon vos besoins
+                    return pbRepository.save(existingPB);
+                })
+                .orElse(null);
     }
 
 }

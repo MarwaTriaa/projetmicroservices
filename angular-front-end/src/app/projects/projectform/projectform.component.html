@@ -1,0 +1,28 @@
+<div class="p-3">
+  <div class="card">
+    <div class="card-body">
+      <h2>New Project</h2>
+      <form [formGroup]="projectForm">
+        <div class="form-group">
+          <label for="projectID">ID project</label>
+          <input type="text" id="projectID" formControlName="projectID" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="nameproject">Project Name</label>
+          <input type="text" id="nameproject" formControlName="nameproject"  class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" id="description" formControlName="description"  class="form-control" required>
+        </div>
+        <br>
+        <!-- Ajoutez d'autres champs de formulaire selon vos besoins -->
+        <input type="button" value="Add" class="btn btn-success" (click)="fnAddProject()">&nbsp;
+        <input type="button" value="Update" class="btn btn-warning" (click)="fnUpdateProject()">&nbsp;
+        <input type="button" value="Delete" class="btn btn-danger" (click)="fnDeleteProject()">&nbsp;
+
+      </form>
+    </div>
+  </div>
+</div>
+

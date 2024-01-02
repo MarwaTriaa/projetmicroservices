@@ -4,10 +4,7 @@ import marwa.projectservice.clients.ProductBacklogRestClient;
 import marwa.projectservice.entities.Project;
 import marwa.projectservice.model.ProductBacklog;
 import marwa.projectservice.repo.ProjectRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,4 +36,28 @@ public class ProjectRestController {
         project.setProductBacklog(productbacklog);
         return project;
     }
+    @PostMapping("/projects")
+    public Project addProject(@RequestBody Project project) {
+        return projectRepository.save(project);
+    }
+    @PutMapping("/projects/{projectID}")
+    public Project updateProject(@PathVariable Long projectID, @RequestBody Project updatedProject) {
+        return projectRepository.findById(projectID)
+                .map(existingProject -> {
+                    existingProject.setNameproject(updatedProject.getNameproject());
+                    existingProject.setDescription(updatedProject.getDescription());
+                    // Ajoutez d'autres propriétés à mettre à jour selon vos besoins
+                    return projectRepository.save(existingProject);
+                })
+                .orElse(null);
+    }
+    @DeleteMapping("/projects/{projectID}")
+    public Project removeProject(@PathVariable Long projectID) {
+        Project project = projectRepository.findById(projectID).orElse(null);
+        if (project != null) {
+            projectRepository.delete(project);
+        }
+        return project;
+    }
+
 }

@@ -2,12 +2,15 @@ package marwa.projectservice;
 
 import marwa.projectservice.clients.ProductBacklogRestClient;
 import marwa.projectservice.entities.Project;
+import marwa.projectservice.model.ProductBacklog;
 import marwa.projectservice.repo.ProjectRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 @SpringBootApplication @EnableFeignClients
 public class ProjectServiceApplication {
@@ -20,7 +23,7 @@ public class ProjectServiceApplication {
         return args -> {
             productBacklogRestClient.allProductBacklogs().forEach(pb->{
                 Project project1= Project.builder()
-                        .nameproject("projectmicroservice")
+                        .nameproject("project-" + pb.getId())
                         .description("application web")
                         .id(pb.getId())
                         .build();
@@ -38,4 +41,6 @@ public class ProjectServiceApplication {
 
 
     }
+
+
 }

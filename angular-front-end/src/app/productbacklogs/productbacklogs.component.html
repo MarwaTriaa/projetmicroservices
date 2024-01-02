@@ -1,0 +1,27 @@
+<div class="p-3">
+  <div class="card">
+    <div class="card-body">
+      <table *ngIf="productbacklogs" class="table">
+        <thead>
+          <tr>
+            <th>ID</th><th>name</th><th>description</th><th>priority</th><th>assignedTo</th>
+            <th>status</th><th>creationDate</th><th>dueDate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of productbacklogs">
+            <td>{{p.id}}</td>
+            <td>{{p.name}}</td>
+            <td>{{p.description}}</td>
+            <td>{{p.priority}}</td>
+            <td>{{p.assignedTo}}</td>
+            <td>{{p.status}}</td>
+            <td>{{p.creationDate | date: 'yyyy-MM-dd' }}</td>
+            <td>{{p.dueDate | date: 'yyyy-MM-dd' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button (click)="redirectToPBForm()" class="btn btn-primary">Edit Product Backlog</button>
+  </div>
+</div>
