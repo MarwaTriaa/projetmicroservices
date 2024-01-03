@@ -32,6 +32,7 @@ export class PbformComponent implements OnInit{
     this.pbService.addPB(this.pbForm).subscribe(
       data => {
         console.log('Product Backlog Item added successfully:', data);
+        alert("Product backlog updated successfully");
       },
       error => {
         console.error('Error adding Product Backlog Item:', error);
@@ -44,6 +45,7 @@ export class PbformComponent implements OnInit{
     this.pbService.updatePB(this.pbForm).subscribe(
       data => {
         console.log('Product Backlog Item updated successfully:', data);
+        alert("productbacklog updated successfully");
       },
       error => {
         console.error('Error updating Product Backlog Item:', error);
@@ -57,6 +59,7 @@ export class PbformComponent implements OnInit{
     this.pbService.removePB(pbId).subscribe(
       data => {
         console.log('Product Backlog Item removed successfully:', data);
+        alert("productbacklog removed successfully")
       },
       error => {
         console.error('Error removing Product Backlog Item:', error);
