@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  rapport:
+    build: .\Rapport
+    image: rapport
+    container_name: rapport
+    ports:
+      - "8085:8085"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/rapport?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    restart: unless-stopped
+    depends_on:
+      - eurekaa
+      - mysql-db
+  eurekaa:
+    build: .\eureka_test
+    image: "eureka"
+    container_name: "eureka"
+    ports:
+      - "8761:8761"
+    hostname: discovery
+  mysql-db:
+    # build: "mysql:5.6"
+    image: "mysql:5.6"
+    container_name: "mysql-db"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root #indisponsable pour la conteneurisation
+      #- MYSQL_DATABASE=job
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+    # hostname: mysql-host ya host name ya nesta3mel container name
